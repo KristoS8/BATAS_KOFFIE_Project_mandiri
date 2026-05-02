@@ -1,0 +1,91 @@
+1. Reservasi Tempat Visual (Main Feature)
+Konsep:
+Mirip booking bioskop.
+User buka halaman layout café → lihat denah.
+
+Contoh:
+🟩 = tersedia
+🟥 = terisi
+🟨 = dibooking sebentar lagi
+
+Klik meja
+Lihat kapasitas meja (2 orang / 4 orang / 6 orang)
+Pilih jam datang
+Pilih durasi reservasi
+
+2. Pre-Order Menu
+Saat booking meja (Pilihan)
+User bisa tambah pesanan:
+Kopi
+Non-coffee
+Snack
+Main course
+Dessert
+Saat datang:
+
+✔ Pesanan hampir siap / siap
+✔ Tinggal duduk di meja reservasi
+
+3. Sistem Waktu Reservasi
+Hari
+Jam datang
+System otomatis blok meja saat waktu bentrok.
+Tidak ada batas durasi otomatis.
+Saat customer selesai & pulang:
+Waitress / staff klik tombol:
+"Meja Kosongkan"
+Lalu status meja berubah jadi tersedia lagi.
+Booking hanya untuk:
+Hari ini
+Besok
+
+
+4. Authentication User
+Register/Login
+Riwayat booking
+Riwayat pesanan
+Cancel reservation
+Edit booking
+
+5. Authentication & Multi Role (Upgrade)
+Customer
+Booking meja
+Order menu
+Feedback
+Riwayat reservasi
+
+Staff / Waitress / kasir
+Check-in customer
+Tandai meja kosong
+Lihat pesanan masuk
+
+Admin web
+Kelola menu
+Kelola layout meja
+Kelola user
+Statistik
+Lihat feedback
+
+6. Dashboard Admin
+Pending booking
+Meja aktif
+Meja kosong
+Order berjalan
+Rating harian
+
+7. Struktur database sekarang (sementara)
+User -> 2 role, admin dan customer(user)
+Seat -> data data Tempat
+reservation -> data reservasi
+
+
+
+
+fitur lainnya: bahasa indonesia dan english, dark mode, multi role, rating dan feedback
+
+2. User Flow (Customer flow dan admin flow) Customer Flow User reservasi – muncul form – user mengisi form – user memilih tanggal (hari ini atau besok) – user menekan next – user memilih seat map di pict yang berisi denah café – user diberi pilihan tambahan untuk lanjut memesan hal lain (menu café) Kalo ya – user memilih menu – user melihat total – user checkout – user mendapatkan qr code/sesuatu yang unik untuk check in di café – selesai Kalo tidak – user melihat total – user checkout – user mendapatkan qr code/sesuatu yang unik untuk check in di café – selesai Admin Flow Admin login – admin melihat booking – admin approve – admin mengupdate seat yang kosong menjadi (booked) – admin dapat crud daftar menu (habis,stock habis) – apabila customer memang datang di jam yang sesuai, admin update seat menjadi terisi – selesai 
+
+3. Role and Permission Customer • Booking seat • Order menu • Lihat Riwayat (Kalo udah login) 
+Admin • Crud Seat • Crud Menu • Lihat Analitics 
+
+4. Daftar Halaman Customer no login Landing page dengan banyak section (Scroll ke bawah), jadi ada 3 keknya, headline, preview singkat tentang menu terlaris/terbaik dan denah dengan seat seat yang ada (kosong, booked dan terisi) Daftar Menu About Form Reservation qr code/sesuatu yang unik Customer login Sama dengan no login tapi Riwayat Booking Admin Dashboard berisi analytics Manage Tables Manage Orders Manage Users Reports

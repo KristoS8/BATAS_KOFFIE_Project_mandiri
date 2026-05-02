@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+
+    /* linen */
+    --color-linen-100: #453118;
+    --color-linen-200: #8a632f;
+    --color-linen-300: #c49353;
+    --color-linen-400: #dcbe98;
+    --color-linen-500: #f3e9dc;
+    --color-linen-600: #f6eee4;
+    --color-linen-700: #f8f2ea;
+    --color-linen-800: #faf6f1;
+    --color-linen-900: #fdfbf8;
+
+    /* caramel */
+    --color-caramel-100: #281b0f;
+    --color-caramel-200: #51351d;
+    --color-caramel-300: #79502c;
+    --color-caramel-400: #a26b3a;
+    --color-caramel-500: #c08552;
+    --color-caramel-600: #cd9e75;
+    --color-caramel-700: #dab698;
+    --color-caramel-800: #e6cfba;
+    --color-caramel-900: #f3e7dd;
+
+    /* caput mortuum */
+    --color-caput-mortuum-100: #130907;
+    --color-caput-mortuum-200: #25130e;
+    --color-caput-mortuum-300: #381c15;
+    --color-caput-mortuum-400: #4a261c;
+    --color-caput-mortuum-500: #5e3023;
+    --color-caput-mortuum-600: #954b37;
+    --color-caput-mortuum-700: #c16e57;
+    --color-caput-mortuum-800: #d69f8f;
+    --color-caput-mortuum-900: #eacfc7;
+
+    /* raw umber */
+    --color-raw-umber-100: #1c110b;
+    --color-raw-umber-200: #372316;
+    --color-raw-umber-300: #533421;
+    --color-raw-umber-400: #6f462c;
+    --color-raw-umber-500: #895737;
+    --color-raw-umber-600: #b7744a;
+    --color-raw-umber-700: #c99777;
+    --color-raw-umber-800: #dbb9a5;
+    --color-raw-umber-900: #eddcd2;
+
+    /* desert sand */
+    --color-desert-sand-100: #372215;
+    --color-desert-sand-200: #6d442a;
+    --color-desert-sand-300: #a4653e;
+    --color-desert-sand-400: #c68c68;
+    --color-desert-sand-500: #dab49d;
+    --color-desert-sand-600: #e2c4b2;
+    --color-desert-sand-700: #e9d3c5;
+    --color-desert-sand-800: #f0e2d9;
+    --color-desert-sand-900: #f8f0ec;
+}
