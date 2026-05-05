@@ -1,3 +1,5 @@
+@props(['navbarSolid' => false])
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,11 +14,14 @@
 
 <body>
 
-    <x-navbar></x-navbar>
+    <x-navbar :navbarSolid="$navbarSolid ?? false">
+    </x-navbar>
 
     <main>
         {{ $slot }}
     </main>
+
+    <x-footer></x-footer>
 
 </body>
 

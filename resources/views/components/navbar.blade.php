@@ -1,10 +1,12 @@
     {{-- Navbar --}}
+    @props(['navbarSolid' => false])
+
     <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
 
-        <div class="max-w-7xl mx-auto px-6 py-5">
+        <div class="w-full mx-auto">
 
             <nav id="navbar-container"
-                class="flex items-center justify-between px-8 py-4 rounded-2xl transition-all duration-300">
+                class="flex items-center justify-between px-16 py-4 transition-all duration-300 {{ $navbarSolid ? 'bg-caramel-500 backdrop-blur-xl shadow-lg' : '' }}">
 
                 {{-- Logo --}}
                 <a href="/" class="text-4xl font-bold text-white tracking-wide">
@@ -15,7 +17,7 @@
                 <ul class="hidden md:flex items-center gap-10 text-white font-medium text-lg">
 
                     <li>
-                        <a href="#" class="hover:text-caramel-800 transition duration-300">
+                        <a href="/" class="hover:text-caramel-800 transition duration-300">
                             Home
                         </a>
                     </li>
@@ -27,7 +29,8 @@
                     </li>
 
                     <li>
-                        <a href="/reservation" class="hover:text-caramel-800 transition duration-300">
+                        <a href="{{ route('reservation_step1') }}"
+                            class="hover:text-caramel-800 transition duration-300">
                             Reservation
                         </a>
                     </li>
@@ -61,27 +64,30 @@
     <script>
         // Navbar Scroll Effect
         const navbarContainer = document.getElementById('navbar-container');
+        let isSolid = @json($navbarSolid);
 
-        window.addEventListener('scroll', () => {
+        if (!isSolid) {
+            window.addEventListener('scroll', () => {
 
-            if (window.scrollY > 50) {
+                if (window.scrollY > 50) {
 
-                navbarContainer.classList.add(
-                    'bg-caramel-500',
-                    'backdrop-blur-xl',
-                    'shadow-2xl',
-                    'border-white/10'
-                );
+                    navbarContainer.classList.add(
+                        'bg-caramel-500',
+                        'backdrop-blur-xl',
+                        'shadow-xl',
+                        'border-white/10'
+                    );
 
-            } else {
+                } else {
 
-                navbarContainer.classList.remove(
-                    'bg-caramel-500',
-                    'backdrop-blur-xl',
-                    'shadow-2xl',
-                    'border-white/10'
-                );
+                    navbarContainer.classList.remove(
+                        'bg-caramel-500',
+                        'backdrop-blur-xl',
+                        'shadow-xl',
+                        'border-white/10'
+                    );
 
-            }
-        });
+                }
+            });
+        }
     </script>
