@@ -23,8 +23,8 @@
                             <label class="text-sm text-gray-600">Nama Lengkap*</label>
                             <input type="text"
                                 class="col-span-2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-caramel-500"
-                                id="name" name="name" required
-                                value="{{ old('name', session('reservation.customer_name')) }}">
+                                id="customer_name" name="customer_name" required
+                                value="{{ old('customer_name', session('reservation.customer_name')) }}">
                         </div>
 
                         {{-- PHONE --}}
@@ -32,8 +32,8 @@
                             <label class="text-sm text-gray-600">No. HP*</label>
                             <input type="text"
                                 class="col-span-2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-caramel-500"
-                                placeholder="+62" id="hp" name="hp" required
-                                value="{{ old('name', session('reservation.phone_number')) }}">
+                                placeholder="+62" id="customer_hp" name="customer_hp" required
+                                value="{{ old('customer_hp', session('reservation.customer_hp')) }}">
                         </div>
 
                         {{-- DATE + TIME --}}
@@ -42,12 +42,12 @@
                             <label class="text-sm text-gray-600">Tanggal Dan Waktu*</label>
 
                             <div class="col-span-2 grid grid-cols-2 gap-4">
-                                <input type="date" class="border border-gray-300 rounded-md px-4 py-2" id="date"
-                                    name="date" value="{{ old('name', session('reservation.reservation_date')) }}"
-                                    required>
-                                <input type="time" class="border border-gray-300 rounded-md px-4 py-2" id="time"
-                                    name="time" required
-                                    value="{{ old('name', session('reservation.reservation_time')) }}">
+                                <input type="date" class="border border-gray-300 rounded-md px-4 py-2"
+                                    id="customer_date" name="customer_date"
+                                    value="{{ old('customer_date', session('reservation.customer_date')) }}" required>
+                                <input type="time" class="border border-gray-300 rounded-md px-4 py-2"
+                                    id="customer_time" name="customer_time" required
+                                    value="{{ old('customer_time', session('reservation.customer_time')) }}">
                             </div>
                         </div>
 
@@ -56,8 +56,8 @@
                             <label class="text-sm text-gray-600">Jumlah Orang*</label>
                             <input type="number"
                                 class="col-span-2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-caramel-500"
-                                id="guests" name="guests" required
-                                value="{{ old('name', session('reservation.total_guest')) }}">
+                                id="customer_guests" name="customer_guests" required
+                                value="{{ old('customer_guests', session('reservation.customer_guests')) }}">
                         </div>
 
                         {{-- NOTE --}}
@@ -65,8 +65,7 @@
                             <label class="text-sm text-gray-600 mt-2">Catatan</label>
                             <textarea rows="3"
                                 class="col-span-2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-caramel-500"
-                                placeholder="Catatan Untuk Cafe" id="note" name="note"
-                                value="{{ old('name', session('reservation.note')) }}"></textarea>
+                                placeholder="Catatan Untuk Cafe" id="customer_note" name="customer_note">{{ old('customer_note', session('reservation.customer_note')) }}</textarea>
                         </div>
 
                     </div>

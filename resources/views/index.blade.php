@@ -106,6 +106,10 @@
                 <a href=""
                     class="bg-caramel-500 p-3 rounded-lg font-semibold text-caramel-900 hover:bg-caramel-400 active:bg-caramel-300 transition ease-in-out duration-200">Reservasi
                     Tempat</a>
+
+                <a href="{{ route('reservation.reset') }}">
+                    Reset Reservation
+                </a>
             </div>
 
 
