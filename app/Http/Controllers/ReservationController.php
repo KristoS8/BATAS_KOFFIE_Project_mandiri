@@ -2,17 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use App\Models\Seat;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ReservationController extends Controller
 {
 
-    public function clearReservation()
+    public function getMyReservation()
     {
-        session()->forget('reservation');
+        $userReservation = Reservation::all();
+        return view('myReservation',['my_reservation'=>$userReservation]);
+    }
 
-        return view('index');
+    public function checkReservation(Request $request){
+        $request->validate([
+            'ID_Reservation' => 'required'
+        ]);
+
+        $reservation = Reservation::with('seat')->where('ID_Reservasi', $request->ID_Reservation)->first();
+
+        if(!$reservation){
+                return response()->json([
+                'success' => false,
+                'message' => 'ID Reservation tidak ditemukan'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+
+            'data' => [
+                'ID_Reservasi' => $reservation->ID_Reservasi,
+                'customer_name' => $reservation->customer_name,
+                'customer_hp' => $reservation->phone_number,
+                'customer_date' => Carbon::parse($reservation->reservation_date)->locale('id')->translatedFormat('l, d F Y'),
+                'customer_time' => $reservation->reservation_time,
+                'customer_guests' => $reservation->total_guest,
+                'customer_note' => $reservation->note,
+                'customer_status' => $reservation->status,
+                'seat_code' => $reservation->seat->seat_code,
+                'seat_capacity' => $reservation->seat->capacity,
+                'seat_size' => $reservation->seat->size_table,
+                'seat_location' => $reservation->seat->location,
+            ]
+        ]);
     }
 
     public function step1() {
@@ -86,6 +122,64 @@ class ReservationController extends Controller
     }
 
     public function step4(){
-        return view('reservations.confirm', ['current_step' => 4]);
+
+        // ambil semua session
+        $reservation = session('reservation');
+
+        // keamanan
+        if (!$reservation){
+            return redirect()->route('reservation_step1');
+        }
+
+        // ambil detail seat dari db
+        $seat = Seat::find($reservation['seat_id']);
+
+        return view('reservations.confirm', [
+        'current_step' => 4,
+        'reservation' => $reservation,
+        'seat' => $seat
+        ]);
+    }
+
+    public function step4_store(){
+        // ambil session
+        $reservation = session('reservation');
+
+        if(!$reservation){
+            return redirect()->route('reservation_step1');
+        }
+
+        // generate ID Reservasi
+        $nameInitial = strtoupper(substr($reservation['customer_name'],0,2));
+
+        $phoneLast = substr($reservation['customer_hp'],-4);
+
+        $random = strtoupper(Str::random(5));
+
+        $IDReservasi = 'RV' . $nameInitial . $phoneLast . $random;
+
+        // simpan reservation
+        $newReservation = Reservation::create([
+            'seat_id' => $reservation['seat_id'],
+            'ID_Reservasi' => $IDReservasi,
+            'customer_name' => $reservation['customer_name'],
+            'phone_number' => $reservation['customer_hp'],
+            'reservation_date' => $reservation['customer_date'],
+            'reservation_time' => $reservation['customer_time'],
+            'total_guest' => $reservation['customer_guests'],
+            'note' => $reservation['customer_note'] ?? null,
+            'status' => 'pending'
+        ]);
+
+        // update seat jadi booked
+
+        Seat::where('id', $reservation['seat_id'])->update([
+            'status' => 'booked'
+        ]);
+
+        session()->forget('reservation');
+
+        return redirect('/')->with('success', 'Reservation Berhasil Dibuat! Kode Reservasi Anda: '
+        . $newReservation->ID_Reservasi);
     }
 }

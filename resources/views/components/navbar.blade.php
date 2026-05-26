@@ -1,93 +1,112 @@
-    {{-- Navbar --}}
-    @props(['navbarSolid' => false])
+{{-- Navbar --}}
+@props(['navbarSolid' => false])
 
-    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+<header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+    <div class="w-full mx-auto">
+        <nav id="navbar-container"
+            class="flex items-center justify-between px-16 py-4 transition-all duration-300 {{ $navbarSolid ? 'bg-caramel-500 backdrop-blur-xl shadow-lg' : '' }}">
 
-        <div class="w-full mx-auto">
+            {{-- Logo --}}
+            <a href="/" class="text-4xl font-bold text-white tracking-wide">
+                BATAS-KOFFIE
+            </a>
 
-            <nav id="navbar-container"
-                class="flex items-center justify-between px-16 py-4 transition-all duration-300 {{ $navbarSolid ? 'bg-caramel-500 backdrop-blur-xl shadow-lg' : '' }}">
+            {{-- Menu dengan Active State Logic --}}
+            <ul class="hidden md:flex items-center gap-10 font-medium text-lg">
 
-                {{-- Logo --}}
-                <a href="/" class="text-4xl font-bold text-white tracking-wide">
-                    BATAS-KOFFIE
-                </a>
+                {{-- Menu: Home --}}
+                <li>
+                    <a href="/" @class([
+                        'pb-1 transition duration-300',
+                        'text-white font-semibold border-b-2 border-white' =>
+                            request()->is('/') || request()->routeIs('home'),
+                        'text-white/70 hover:text-white' => !(
+                            request()->is('/') || request()->routeIs('home')
+                        ),
+                    ])>
+                        Home
+                    </a>
+                </li>
 
-                {{-- Menu --}}
-                <ul class="hidden md:flex items-center gap-10 text-white font-medium text-lg">
+                {{-- Menu: Menu --}}
+                <li>
+                    <a href="/menu" @class([
+                        'pb-1 transition duration-300',
+                        'text-white font-semibold border-b-2 border-white' =>
+                            request()->is('menu*') || request()->routeIs('menu.*'),
+                        'text-white/70 hover:text-white' => !(
+                            request()->is('menu*') || request()->routeIs('menu.*')
+                        ),
+                    ])>
+                        Menu
+                    </a>
+                </li>
 
-                    <li>
-                        <a href="/" class="hover:text-caramel-800 transition duration-300">
-                            Home
-                        </a>
-                    </li>
+                {{-- Menu: Reservation Saya --}}
+                <li>
+                    <a href="{{ route('myReservation') }}" @class([
+                        'pb-1 transition duration-300',
+                        'text-white font-semibold border-b-2 border-white' => request()->routeIs(
+                            'myReservation'),
+                        'text-white/70 hover:text-white' => !request()->routeIs('myReservation'),
+                    ])>
+                        Reservation Saya
+                    </a>
+                </li>
 
-                    <li>
-                        <a href="#" class="hover:text-caramel-800 transition duration-300">
-                            Menu
-                        </a>
-                    </li>
+                {{-- Menu: About --}}
+                <li>
+                    <a href="/about" @class([
+                        'pb-1 transition duration-300',
+                        'text-white font-semibold border-b-2 border-white' =>
+                            request()->is('about') || request()->routeIs('about'),
+                        'text-white/70 hover:text-white' => !(
+                            request()->is('about') || request()->routeIs('about')
+                        ),
+                    ])>
+                        About Us
+                    </a>
+                </li>
 
-                    <li>
-                        <a href="{{ route('reservation_step1') }}"
-                            class="hover:text-caramel-800 transition duration-300">
-                            Reservation
-                        </a>
-                    </li>
+            </ul>
 
-                    <li>
-                        <a href="#" class="hover:text-caramel-800 transition duration-300">
-                            About
-                        </a>
-                    </li>
+            {{-- Right Side (Login & Daftar) --}}
+            <div class="flex items-center gap-4">
+                {{-- Login --}}
+                <a href=""
+                    class="bg-caramel-500 p-3 rounded-lg font-semibold text-caramel-900 hover:bg-caramel-400 active:bg-caramel-300 transition ease-in-out duration-200">Login</a>
 
-                </ul>
+                {{-- CTA --}}
+                <a href=""
+                    class="bg-caramel-500 p-3 rounded-lg font-semibold text-caramel-900 hover:bg-caramel-400 active:bg-caramel-300 transition ease-in-out duration-200">Daftar</a>
+            </div>
 
-                {{-- Right Side --}}
-                <div class="flex items-center gap-4">
+        </nav>
+    </div>
+</header>
 
-                    {{-- Login --}}
-                    <a href=""
-                        class="bg-caramel-500 p-3 rounded-lg font-semibold text-caramel-900 hover:bg-caramel-400 active:bg-caramel-300 transition ease-in-out duration-200">Login</a>
+<script>
+    // Navbar Scroll Effect (Tetap mempertahankan logika bawaan Anda)
+    const navbarContainer = document.getElementById('navbar-container');
+    let isSolid = @json($navbarSolid);
 
-                    {{-- CTA --}}
-                    <a href=""
-                        class="bg-caramel-500 p-3 rounded-lg font-semibold text-caramel-900 hover:bg-caramel-400 active:bg-caramel-300 transition ease-in-out duration-200">Daftar</a>
-
-                </div>
-
-            </nav>
-        </div>
-    </header>
-
-
-    <script>
-        // Navbar Scroll Effect
-        const navbarContainer = document.getElementById('navbar-container');
-        let isSolid = @json($navbarSolid);
-
-        if (!isSolid) {
-            window.addEventListener('scroll', () => {
-
-                if (window.scrollY > 50) {
-
-                    navbarContainer.classList.add(
-                        'bg-caramel-500',
-                        'backdrop-blur-xl',
-                        'shadow-xl',
-                        'border-white/10'
-                    );
-
-                } else {
-
-                    navbarContainer.classList.remove(
-                        'bg-caramel-500',
-                        'backdrop-blur-xl',
-                        'shadow-xl',
-                        'border-white/10'
-                    );
-
-                }
-            });
-        }
-    </script>
+    if (!isSolid) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbarContainer.classList.add(
+                    'bg-caramel-500',
+                    'backdrop-blur-xl',
+                    'shadow-xl',
+                    'border-white/10'
+                );
+            } else {
+                navbarContainer.classList.remove(
+                    'bg-caramel-500',
+                    'backdrop-blur-xl',
+                    'shadow-xl',
+                    'border-white/10'
+                );
+            }
+        });
+    }
+</script>

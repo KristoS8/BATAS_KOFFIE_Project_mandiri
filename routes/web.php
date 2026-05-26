@@ -7,6 +7,9 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/my-reservation', [ReservationController::class, 'getMyReservation'])->name('myReservation');
+Route::post('/getMyreservation', [ReservationController::class, 'checkReservation'])->name('getMyReservation');
+
 Route::get('/reservation/reset', [ReservationController::class, 'clearReservation'])
     ->name('reservation.reset');
 

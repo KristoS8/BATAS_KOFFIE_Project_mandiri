@@ -142,11 +142,11 @@
                 document.getElementById('selectedSeatCapacity').innerText =
                     "{{ $selectedSeat->capacity }} Kursi";
 
-                document.getElementById('selectedSeatSize').innerText =
-                    "{{ $selectedSeat->size }}";
-
                 document.getElementById('selectedSeatLocation').innerText =
                     "{{ $selectedSeat->location }}";
+
+                document.getElementById('selectedSeatSize').innerText =
+                    "{{ $selectedSeat->size_table }}";
 
                 document.getElementById('selectedSeatInput').value =
                     "{{ $selectedSeat->id }}";

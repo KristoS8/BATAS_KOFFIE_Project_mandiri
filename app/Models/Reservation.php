@@ -11,7 +11,7 @@ class Reservation extends Model
     /** @use HasFactory<\Database\Factories\ReservationFactory> */
     use HasFactory;
 
-    protected $fillable = ['customer_name','phone_number','reservation_date','reservation_time','total_guest','note','status'];
+    protected $fillable = ['user_id','seat_id','ID_Reservasi','customer_name','phone_number','reservation_date','reservation_time','total_guest','note','status'];
 
     public function user(): BelongsTo
     {

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('seat_id')->constrained()->onDelete('cascade');
+            $table->string('ID_Reservasi')->unique();
             $table->string('customer_name');
             $table->string('phone_number',13);
             $table->date('reservation_date');
