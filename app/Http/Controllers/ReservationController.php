@@ -42,11 +42,13 @@ class ReservationController extends Controller
                 'customer_time' => $reservation->reservation_time,
                 'customer_guests' => $reservation->total_guest,
                 'customer_note' => $reservation->note,
+                'status_reservation' => $reservation->status,
                 'customer_status' => $reservation->status,
                 'seat_code' => $reservation->seat->seat_code,
                 'seat_capacity' => $reservation->seat->capacity,
                 'seat_size' => $reservation->seat->size_table,
                 'seat_location' => $reservation->seat->location,
+                'status_seats' => $reservation->seat->status,
             ]
         ]);
     }
@@ -181,5 +183,30 @@ class ReservationController extends Controller
 
         return redirect('/')->with('success', 'Reservation Berhasil Dibuat! Kode Reservasi Anda: '
         . $newReservation->ID_Reservasi);
+    }
+
+    public function cancelReservation(Request $request){
+        $reservation = Reservation::with('seat')->where('ID_Reservasi', $request->ID_Reservasi)->first();
+
+        if(!$reservation){
+            return response()->json([
+                'success' => false,
+                'message' => 'Reservation tidak ditemukan'
+            ]);
+        }
+
+        // update reservation
+        $reservation->status = 'cancelled';
+        $reservation->save();
+
+        // seat kembali available
+        $reservation->seat->status = 'available';
+        $reservation->seat->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Reservation berhasil dibatalkan'
+        ]);
+
     }
 }

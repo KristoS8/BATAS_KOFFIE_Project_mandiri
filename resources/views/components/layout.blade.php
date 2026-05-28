@@ -18,7 +18,7 @@
     <x-navbar :navbarSolid="$navbarSolid ?? false"></x-navbar>
 
     <div class="pt-20 px-16 fixed top-0 left-0 w-full z-40">
-        <x-alert_success></x-alert_success>
+        <x-alert_success type="success"></x-alert_success>
     </div>
 
     <main>

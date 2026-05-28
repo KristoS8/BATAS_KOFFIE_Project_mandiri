@@ -1,4 +1,11 @@
+<div id="cancel_modal" class="fixed inset-0 z-50 bg-gray-600/60 hidden items-center justify-center p-4 overflow-y-auto">
+
+    <x-confirm_modal></x-confirm_modal>
+
+</div>
+
 <x-layout>
+
     {{-- hero image --}}
     <section class="relative mx-auto min-h-screen">
         <img class="w-full object-cover h-screen rounded-md" src="{{ asset('img/cafe.jpeg') }}" alt="Cafe">
@@ -28,7 +35,7 @@
                         class="flex-1 bg-gray-50 text-sm font-semibold text-gray-800 placeholder-gray-400 rounded-xl px-4 py-3 border border-gray-200 focus:outline-none focus:border-gray-400 focus:bg-white transition-all duration-200 uppercase tracking-wide">
 
                     <button onclick="checkReservationStatus()" id="btn-submit"
-                        class="bg-caramel-500 p-3 rounded-lg font-semibold text-caramel-900 hover:bg-caramel-400 active:bg-caramel-300 transition ease-in-out duration-200">
+                        class="bg-caramel-500 p-3 rounded-lg font-semibold text-caramel-900 hover:bg-caramel-400 active:bg-caramel-300 transition ease-in-out duration-200 text-[10px] md:text-sm cursor-pointer">
                         <i class="fa-solid fa-magnifying-glass text-xs" id="btn-icon"></i>
                         <span id="btn-text">Cek Reservasi</span>
                     </button>
@@ -51,10 +58,22 @@
                         class="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-xl border border-gray-100">
                         <span class="text-xs font-mono font-bold text-gray-700 md:text-sm"
                             id="display-kode-booking">#BK-2026</span>
-                        <span
-                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-800 md:text-sm">
-                            <span class="w-3 h-3 rounded-full bg-green-600 animate-pulse"></span> Booked
+                        <span id="status_reservation_3"
+                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 md:text-sm">
+                            <span class="w-3 h-3 rounded-full bg-blue-600 animate-pulse"
+                                id="status_reservation_2"></span>
+
+                            <span id="status_reservation">
+                                Booked
+                            </span>
+
                         </span>
+
+                    </div>
+
+                    <div class="text-caramel-300 text-xs" id="text_info">
+                        Reservasi anda sedang diproses, Mohon menunggu. <br>
+                        Kami akan memberitahukan anda jika reservasi anda telah berhasil.
                     </div>
 
                     <div class="space-y-7 md:space-y-10"> {{-- Menambah jarak vertikal antar-kelompok besar di PC --}}
@@ -70,7 +89,8 @@
                             <div class="flex items-center gap-2.5 md:py-1"> {{-- md:py-1 menambah ruang bantalan atas-bawah baris --}}
                                 <i class="fa-solid fa-user text-caramel-400 w-4 text-center md:text-base"></i>
                                 <div>
-                                    <span class="text-caramel-400 block text-[10px] md:text-xs">Nama Pelanggan</span>
+                                    <span class="text-caramel-400 block text-[10px] md:text-xs">Nama
+                                        Pelanggan</span>
                                     <span class="font-semibold text-gray-800 md:font-bold" id="display-nama">Raditya
                                         Rahman</span>
                                 </div>
@@ -135,17 +155,20 @@
                             <div
                                 class="flex items-center justify-between bg-white px-3 py-2.5 rounded-xl border border-gray-100">
                                 <div class="flex items-center gap-2 text-xs font-medium text-caramel-400 md:text-sm">
-                                    <i class="fa-solid fa-maximize text-caramel-400 w-4 text-center"></i> Kapasitas &
+                                    <i class="fa-solid fa-maximize text-caramel-400 w-4 text-center"></i> Kapasitas
+                                    &
                                     Ukuran
                                 </div>
-                                <span class="text-xs font-semibold text-gray-800 md:text-sm" id="display-ukuran">Maks. 4
+                                <span class="text-xs font-semibold text-gray-800 md:text-sm" id="display-ukuran">Maks.
+                                    4
                                     Kursi (140
                                     x 90 cm)</span>
                             </div>
                             <div
                                 class="flex items-center justify-between bg-white px-3 py-2.5 rounded-xl border border-gray-100">
                                 <div class="flex items-center gap-2 text-xs font-medium text-caramel-400 md:text-sm">
-                                    <i class="fa-solid fa-compass text-caramel-400 w-4 text-center "></i> Area Lokasi
+                                    <i class="fa-solid fa-compass text-caramel-400 w-4 text-center "></i> Area
+                                    Lokasi
                                 </div>
                                 <span
                                     class="text-xs font-semibold text-gray-800 bg-emerald-50 px-2 py-0.5 rounded md:text-sm"
@@ -153,7 +176,13 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="flex justify-center md:justify-end pt-2">
+                        <button id="btnCancelReservation" onclick="cancelReservation()"
+                            class="bg-red-600 p-3 rounded-lg font-semibold text-red-100 hover:bg-red-500 active:bg-red-700 transition ease-in-out duration-200 text-[10px] md:text-sm cursor-pointer">
+                            <i class="fa-solid fa-ban text-xs" id="btn-icon"></i>
+                            <span id="btn_text_cancel">Batalkan</span>
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -304,6 +333,118 @@
                 ).innerText =
                 data.seat_location;
 
+            document.getElementById(
+                'status_reservation'
+            ).innerText = data.status_reservation;
+
+
+            // RESET STATUS STYLE
+            let statusReservation =
+                document.getElementById('status_reservation');
+
+            let statusReservation2 =
+                document.getElementById('status_reservation_2');
+
+            let statusReservation3 =
+                document.getElementById('status_reservation_3');
+
+            let btnCancelReservation =
+                document.getElementById('btnCancelReservation');
+
+            let text_info = document.getElementById('text_info');
+            // reset warna status
+
+            statusReservation3.classList.remove(
+                'bg-red-100',
+            );
+
+            statusReservation3.classList.add(
+                'bg-blue-100',
+            );
+
+            // reset dot
+            statusReservation2.classList.remove(
+                'bg-red-600'
+            );
+
+            statusReservation2.classList.add(
+                'bg-blue-600'
+            );
+
+            // reset button
+            btnCancelReservation.disabled = false;
+
+            btnCancelReservation.innerText = 'Batalkan';
+
+            btnCancelReservation.classList.remove(
+                'bg-gray-400',
+                'text-gray-800',
+                'cursor-not-allowed'
+            );
+
+            btnCancelReservation.classList.add(
+                'bg-red-600',
+                'text-red-100',
+                'hover:bg-red-500',
+                'active:bg-red-700'
+            );
+
+            text_info.innerText =
+                'Reservasi anda sedang diproses, Mohon menunggu. Kami akan memberitahukan anda jika reservasi anda telah berhasil.';
+
+            if (data.status_reservation == 'cancelled') {
+                let statusReservation = document.getElementById('status_reservation');
+                let statusReservation2 = document.getElementById('status_reservation_2');
+                let statusReservation3 = document.getElementById('status_reservation_3');
+                let btnCancelReservation = document.getElementById('btnCancelReservation');
+                let text_info = document.getElementById('text_info');
+                btnCancelReservation.innerText = 'Pesanan Telah Dibatalkan';
+
+                statusReservation.classList.remove(
+                    'text-blue-800',
+                    'bg-blue-100',
+                );
+
+                statusReservation.classList.add(
+                    'text-red-600',
+                    'bg-red-100',
+                );
+
+                statusReservation2.classList.remove(
+                    'bg-blue-600'
+                );
+
+                statusReservation2.classList.add(
+                    'bg-red-600'
+                );
+
+                statusReservation3.classList.remove(
+                    'bg-blue-100',
+                );
+
+                statusReservation3.classList.add(
+                    'bg-red-100',
+                );
+
+                btnCancelReservation.classList.remove(
+                    'bg-red-600',
+                    'text-red-100',
+                    'hover:bg-red-500',
+                    'active:bg-red-700',
+                    'cursor-pointer',
+                );
+
+                btnCancelReservation.classList.add(
+                    'bg-gray-400',
+                    'text-gray-800',
+                    'cursor-not-allowed'
+                );
+
+                btnCancelReservation.disabled = true;
+
+                text_info.innerText = 'Pesanan anda telah dibatalkan. Terima Kasih telah berkunjung.';
+            }
+
             // TAMPILKAN RESULT
             resultState.classList.remove('hidden');
 
@@ -333,4 +474,109 @@
             checkReservationStatus();
         }
     });
+
+    // cancel reservation
+
+    async function cancelReservation() {
+
+        let modal_confirm = document.getElementById('cancel_modal');
+
+        modal_confirm.classList.remove('hidden');
+
+        modal_confirm.classList.add('flex');
+
+    }
+
+    async function confirmCancelReservation() {
+        const ID_Reservasi = document.getElementById('display-kode-booking').innerText;
+
+        const response = await fetch("{{ route('cancelReservation') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector(
+                        'meta[name="csrf-token"]'
+                    ).content
+                },
+
+                body: JSON.stringify({
+                    ID_Reservasi: ID_Reservasi
+                })
+            }
+
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+            let statusReservation = document.getElementById('status_reservation');
+            let statusReservation2 = document.getElementById('status_reservation_2');
+            let statusReservation3 = document.getElementById('status_reservation_3');
+            let btnCancelReservation = document.getElementById('btnCancelReservation');
+            let text_info = document.getElementById('text_info');
+            statusReservation.innerText = 'cancelled';
+            btnCancelReservation.innerText = 'Pesanan Telah Dibatalkan';
+
+            statusReservation.classList.remove(
+                'text-blue-800',
+            );
+
+            statusReservation.classList.add(
+                'text-red-600',
+            );
+
+            status_reservation_2.classList.remove(
+                'bg-blue-600'
+            );
+
+            status_reservation_2.classList.add(
+                'bg-red-300'
+            );
+
+            statusReservation3.classList.remove(
+                'bg-blue-100',
+            );
+
+            statusReservation3.classList.add(
+                'bg-red-100',
+            );
+
+            btnCancelReservation.classList.remove(
+                'bg-red-600',
+                'text-red-100',
+                'hover:bg-red-500',
+                'active:bg-red-700'
+            );
+
+            btnCancelReservation.classList.add(
+                'bg-gray-400',
+                'text-gray-800',
+                'cursor-none'
+            );
+
+            btnCancelReservation.disabled = true;
+
+            text_info.innerText = 'Pesanan anda telah dibatalkan. Terima Kasih telah berkunjung.';
+
+            let modal_confirm = document.getElementById('cancel_modal');
+
+            modal_confirm.classList.remove('flex');
+
+            modal_confirm.classList.add('hidden');
+
+            showAlert(
+                result.message, 'error'
+            );
+        }
+
+    }
+
+    function closeCancelModal() {
+
+        let modal_confirm = document.getElementById('cancel_modal');
+
+        modal_confirm.classList.remove('flex');
+
+        modal_confirm.classList.add('hidden');
+    }
 </script>
