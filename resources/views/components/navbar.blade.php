@@ -73,11 +73,11 @@
             {{-- Right Side (Login & Daftar) --}}
             <div class="flex items-center gap-4">
                 {{-- Login --}}
-                <a href=""
+                <a href="" id="login_nav"
                     class="bg-caramel-500 p-3 rounded-lg font-semibold text-caramel-900 hover:bg-caramel-400 active:bg-caramel-300 transition ease-in-out duration-200">Login</a>
 
                 {{-- CTA --}}
-                <a href=""
+                <a href="" id="sign_nav"
                     class="bg-caramel-500 p-3 rounded-lg font-semibold text-caramel-900 hover:bg-caramel-400 active:bg-caramel-300 transition ease-in-out duration-200">Daftar</a>
             </div>
 
@@ -88,6 +88,8 @@
 <script>
     // Navbar Scroll Effect (Tetap mempertahankan logika bawaan Anda)
     const navbarContainer = document.getElementById('navbar-container');
+    const login_nav = document.getElementById('login_nav');
+    const sign_nav = document.getElementById('sign_nav');
     let isSolid = @json($navbarSolid);
 
     if (!isSolid) {
@@ -97,14 +99,36 @@
                     'bg-caramel-500',
                     'backdrop-blur-xl',
                     'shadow-xl',
-                    'border-white/10'
+                    'border-white-100'
+                );
+
+                login_nav.classList.add(
+                    'border-2',
+                    'border-solid',
+                    'border-gray-100',
+                );
+                sign_nav.classList.add(
+                    'border-2',
+                    'border-solid',
+                    'border-gray-100',
                 );
             } else {
                 navbarContainer.classList.remove(
                     'bg-caramel-500',
                     'backdrop-blur-xl',
                     'shadow-xl',
-                    'border-white/10'
+                    'border-white-100'
+                );
+
+                login_nav.classList.remove(
+                    'border-2',
+                    'border-solid',
+                    'border-gray-100',
+                );
+                sign_nav.classList.remove(
+                    'border-2',
+                    'border-solid',
+                    'border-gray-100',
                 );
             }
         });

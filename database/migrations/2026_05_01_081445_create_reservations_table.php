@@ -22,7 +22,7 @@ return new class extends Migration
             $table->time('reservation_time');
             $table->integer('total_guest');
             $table->text('note')->nullable();
-            $table->enum('status',['pending','approved','completed','cancelled'])->default('pending');
+            $table->enum('status',['pending','approved','rejected','cancelled'])->default('pending');
             $table->timestamps();
         });
     }

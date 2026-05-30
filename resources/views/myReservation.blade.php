@@ -58,13 +58,10 @@
                         class="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-xl border border-gray-100">
                         <span class="text-xs font-mono font-bold text-gray-700 md:text-sm"
                             id="display-kode-booking">#BK-2026</span>
-                        <span id="status_reservation_3"
-                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 md:text-sm">
-                            <span class="w-3 h-3 rounded-full bg-blue-600 animate-pulse"
-                                id="status_reservation_2"></span>
+                        <span id="status_reservation_3">
+                            <span id="status_reservation_2"></span>
 
                             <span id="status_reservation">
-                                Booked
                             </span>
 
                         </span>
@@ -177,8 +174,7 @@
                         </div>
                     </div>
                     <div class="flex justify-center md:justify-end pt-2">
-                        <button id="btnCancelReservation" onclick="cancelReservation()"
-                            class="bg-red-600 p-3 rounded-lg font-semibold text-red-100 hover:bg-red-500 active:bg-red-700 transition ease-in-out duration-200 text-[10px] md:text-sm cursor-pointer">
+                        <button id="btnCancelReservation" onclick="cancelReservation()">
                             <i class="fa-solid fa-ban text-xs" id="btn-icon"></i>
                             <span id="btn_text_cancel">Batalkan</span>
                         </button>
@@ -333,117 +329,11 @@
                 ).innerText =
                 data.seat_location;
 
-            document.getElementById(
-                'status_reservation'
-            ).innerText = data.status_reservation;
-
-
-            // RESET STATUS STYLE
-            let statusReservation =
-                document.getElementById('status_reservation');
-
-            let statusReservation2 =
-                document.getElementById('status_reservation_2');
-
-            let statusReservation3 =
-                document.getElementById('status_reservation_3');
-
-            let btnCancelReservation =
-                document.getElementById('btnCancelReservation');
-
-            let text_info = document.getElementById('text_info');
-            // reset warna status
-
-            statusReservation3.classList.remove(
-                'bg-red-100',
+            updateReservationStatus(
+                data.status_reservation
             );
 
-            statusReservation3.classList.add(
-                'bg-blue-100',
-            );
-
-            // reset dot
-            statusReservation2.classList.remove(
-                'bg-red-600'
-            );
-
-            statusReservation2.classList.add(
-                'bg-blue-600'
-            );
-
-            // reset button
-            btnCancelReservation.disabled = false;
-
-            btnCancelReservation.innerText = 'Batalkan';
-
-            btnCancelReservation.classList.remove(
-                'bg-gray-400',
-                'text-gray-800',
-                'cursor-not-allowed'
-            );
-
-            btnCancelReservation.classList.add(
-                'bg-red-600',
-                'text-red-100',
-                'hover:bg-red-500',
-                'active:bg-red-700'
-            );
-
-            text_info.innerText =
-                'Reservasi anda sedang diproses, Mohon menunggu. Kami akan memberitahukan anda jika reservasi anda telah berhasil.';
-
-            if (data.status_reservation == 'cancelled') {
-                let statusReservation = document.getElementById('status_reservation');
-                let statusReservation2 = document.getElementById('status_reservation_2');
-                let statusReservation3 = document.getElementById('status_reservation_3');
-                let btnCancelReservation = document.getElementById('btnCancelReservation');
-                let text_info = document.getElementById('text_info');
-                btnCancelReservation.innerText = 'Pesanan Telah Dibatalkan';
-
-                statusReservation.classList.remove(
-                    'text-blue-800',
-                    'bg-blue-100',
-                );
-
-                statusReservation.classList.add(
-                    'text-red-600',
-                    'bg-red-100',
-                );
-
-                statusReservation2.classList.remove(
-                    'bg-blue-600'
-                );
-
-                statusReservation2.classList.add(
-                    'bg-red-600'
-                );
-
-                statusReservation3.classList.remove(
-                    'bg-blue-100',
-                );
-
-                statusReservation3.classList.add(
-                    'bg-red-100',
-                );
-
-                btnCancelReservation.classList.remove(
-                    'bg-red-600',
-                    'text-red-100',
-                    'hover:bg-red-500',
-                    'active:bg-red-700',
-                    'cursor-pointer',
-                );
-
-                btnCancelReservation.classList.add(
-                    'bg-gray-400',
-                    'text-gray-800',
-                    'cursor-not-allowed'
-                );
-
-                btnCancelReservation.disabled = true;
-
-                text_info.innerText = 'Pesanan anda telah dibatalkan. Terima Kasih telah berkunjung.';
-            }
+            console.log(data.status_reservation);
 
             // TAMPILKAN RESULT
             resultState.classList.remove('hidden');
@@ -509,54 +399,7 @@
         const result = await response.json();
 
         if (result.success) {
-            let statusReservation = document.getElementById('status_reservation');
-            let statusReservation2 = document.getElementById('status_reservation_2');
-            let statusReservation3 = document.getElementById('status_reservation_3');
-            let btnCancelReservation = document.getElementById('btnCancelReservation');
-            let text_info = document.getElementById('text_info');
-            statusReservation.innerText = 'cancelled';
-            btnCancelReservation.innerText = 'Pesanan Telah Dibatalkan';
-
-            statusReservation.classList.remove(
-                'text-blue-800',
-            );
-
-            statusReservation.classList.add(
-                'text-red-600',
-            );
-
-            status_reservation_2.classList.remove(
-                'bg-blue-600'
-            );
-
-            status_reservation_2.classList.add(
-                'bg-red-300'
-            );
-
-            statusReservation3.classList.remove(
-                'bg-blue-100',
-            );
-
-            statusReservation3.classList.add(
-                'bg-red-100',
-            );
-
-            btnCancelReservation.classList.remove(
-                'bg-red-600',
-                'text-red-100',
-                'hover:bg-red-500',
-                'active:bg-red-700'
-            );
-
-            btnCancelReservation.classList.add(
-                'bg-gray-400',
-                'text-gray-800',
-                'cursor-none'
-            );
-
-            btnCancelReservation.disabled = true;
-
-            text_info.innerText = 'Pesanan anda telah dibatalkan. Terima Kasih telah berkunjung.';
+            updateReservationStatus('cancelled');
 
             let modal_confirm = document.getElementById('cancel_modal');
 
@@ -578,5 +421,153 @@
         modal_confirm.classList.remove('flex');
 
         modal_confirm.classList.add('hidden');
+    }
+
+    // fungsi memeriksa status reservasi
+
+    function updateReservationStatus(status) {
+        let statusText = document.getElementById('status_reservation');
+
+        statusText.className = '';
+
+        let statusreservation2 = document.getElementById('status_reservation_2');
+
+        statusreservation2.className = 'w-3 h-3 rounded-full animate-pulse';
+
+        let btnCancelReservation = document.getElementById('btnCancelReservation');
+
+        btnCancelReservation.className =
+            'p-3 rounded-lg font-semibold transition ease-in-out duration-200 text-[10px] md:text-sm';
+
+        let statusReservation3 =
+            document.getElementById('status_reservation_3');
+
+        statusReservation3.className =
+            'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold md:text-sm';
+
+        let text_info = document.getElementById('text_info');
+
+        switch (status) {
+            case 'pending':
+
+                statusText.innerText = 'Menunggu Persetujuan';
+
+                statusreservation2.classList.add(
+                    'bg-blue-600'
+                );
+
+                statusReservation3.classList.add(
+                    'bg-blue-100',
+                );
+
+                btnCancelReservation.disabled = false;
+
+                btnCancelReservation.innerText = 'Batalkan Reservasi';
+
+                btnCancelReservation.classList.add(
+                    'bg-red-600',
+                    'text-red-100',
+                    'hover:bg-red-500',
+                    'active:bg-red-700',
+                    'cursor-pointer'
+                );
+
+                text_info.innerText =
+                    'Reservasi anda sedang diproses, Mohon menunggu. Kami akan memberitahukan anda jika reservasi anda telah berhasil.';
+
+                break;
+
+            case 'approved':
+
+                statusText.innerText = 'Reservasi Disetujui';
+
+                statusText.classList.add(
+                    'text-green-600',
+                );
+
+                statusreservation2.classList.add(
+                    'bg-green-600'
+                );
+
+                statusReservation3.classList.add(
+                    'bg-green-100',
+                );
+
+                btnCancelReservation.disabled = true;
+
+                btnCancelReservation.innerText = 'Reservasi Berhasil';
+
+                btnCancelReservation.classList.add(
+                    'bg-gray-400',
+                    'text-gray-800',
+                    'cursor-not-allowed'
+                );
+
+                text_info.innerText =
+                    'Reservasi anda telah berhasil!. Silahkan download bukti reservasi dan qr code';
+
+                break;
+
+            case 'rejected':
+
+                statusText.innerText = 'Reservasi Ditolak';
+
+                statusText.classList.add(
+                    'text-red-600',
+                );
+
+                statusreservation2.classList.add(
+                    'bg-red-600'
+                );
+
+                statusReservation3.classList.add(
+                    'bg-red-100',
+                );
+
+                btnCancelReservation.disabled = true;
+
+                btnCancelReservation.innerText = 'Reservasi Tidak Berhasil';
+
+                btnCancelReservation.classList.add(
+                    'bg-gray-400',
+                    'text-gray-800',
+                    'cursor-not-allowed'
+                );
+
+                text_info.innerText =
+                    'Reservasi anda gagal dan ditolak. Silahkan melakukan reservasi di lain waktu';
+
+                break;
+
+            case 'cancelled':
+
+                statusText.innerText = 'Reservasi Dibatalkan';
+
+                statusText.classList.add(
+                    'text-red-600',
+                );
+
+                statusreservation2.classList.add(
+                    'bg-red-300'
+                );
+
+                statusReservation3.classList.add(
+                    'bg-red-100',
+                );
+
+                btnCancelReservation.disabled = true;
+
+                btnCancelReservation.innerText = 'Reservasi Dibatalkan';
+
+                btnCancelReservation.classList.add(
+                    'bg-gray-400',
+                    'text-gray-800',
+                    'cursor-not-allowed'
+                );
+
+                text_info.innerText = 'Pesanan anda telah dibatalkan. Terima Kasih telah berkunjung.';
+
+                break;
+        }
     }
 </script>
